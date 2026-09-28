@@ -1,0 +1,665 @@
+:root {
+  --green: #087f52;
+  --green-dark: #04583a;
+  --green-light: #e8f6ef;
+  --background: #f4f7f5;
+  --white: #ffffff;
+  --text: #17221d;
+  --muted: #718078;
+  --border: #e4ebe7;
+  --red: #d94c4c;
+  --orange: #e49a32;
+  --shadow: 0 8px 24px rgba(18, 52, 39, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top-header {
+  background: linear-gradient(145deg, var(--green-dark), var(--green));
+  color: white;
+  padding: 20px 18px 30px;
+  border-radius: 0 0 28px 28px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: white;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 800;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.brand strong {
+  display: block;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+.brand span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.settings-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.13);
+  color: white;
+  font-size: 19px;
+}
+
+.welcome {
+  margin-top: 25px;
+}
+
+.welcome small {
+  opacity: 0.75;
+  font-size: 12px;
+}
+
+.welcome h1 {
+  font-size: 25px;
+  margin-top: 5px;
+}
+
+.balance-card {
+  margin-top: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.balance-card small {
+  opacity: 0.75;
+  font-size: 12px;
+}
+
+.balance-card h2 {
+  font-size: 28px;
+  margin-top: 5px;
+}
+
+.currency {
+  background: rgba(255, 255, 255, 0.14);
+  padding: 8px 11px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* =========================
+   SECTION TITLES
+========================= */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 2px 13px;
+}
+
+.section-title h2 {
+  font-size: 17px;
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  margin-bottom: 25px;
+}
+
+.quick-actions button {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 13px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease;
+}
+
+.quick-actions button:active {
+  transform: scale(0.96);
+}
+
+.quick-actions span {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.quick-actions strong {
+  font-size: 11px;
+}
+
+/* Extra action buttons (Reports / Cash Flow) */
+.extra-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.extra-actions button {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 14px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform 0.15s ease;
+}
+
+.extra-actions button:active {
+  transform: scale(0.97);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.stat-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 19px;
+}
+
+.stat-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 6px;
+}
+
+.stat-card .positive {
+  color: var(--green);
+}
+
+.stat-card .negative {
+  color: var(--red);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 19px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 15px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 28px 10px;
+  color: var(--muted);
+}
+
+.empty-state div {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.empty-state strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  font-size: 12px;
+}
+
+/* =========================
+   PAGE HEADINGS
+========================= */
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.page-heading small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.page-heading h2 {
+  font-size: 23px;
+  margin-top: 3px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.primary-button {
+  background: var(--green);
+  color: white;
+  border-radius: 12px;
+  padding: 11px 15px;
+  font-weight: 700;
+  font-size: 12px;
+  box-shadow: 0 5px 12px rgba(8, 127, 82, 0.18);
+}
+
+.primary-button:active {
+  transform: scale(0.97);
+}
+
+.primary-button.full {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+}
+
+.text-button {
+  background: transparent;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-small {
+  background: var(--green-light);
+  color: var(--green);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+/* =========================
+   LIST ITEMS
+========================= */
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.list-item:first-child {
+  padding-top: 2px;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+
+.list-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.list-main strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.list-main small {
+  color: var(--muted);
+  font-size: 10px;
+  display: block;
+}
+
+.list-amount {
+  text-align: right;
+  font-weight: 800;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.list-amount.green {
+  color: var(--green);
+}
+
+.list-amount.red {
+  color: var(--red);
+}
+
+/* =========================
+   FORMS
+========================= */
+
+.form-card {
+  padding: 18px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 7px;
+  color: var(--text);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: #fbfcfb;
+  border-radius: 12px;
+  padding: 13px;
+  outline: none;
+  color: var(--text);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--green);
+  background: white;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* =========================
+   STOCK
+========================= */
+
+.stock-low {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.stock-good {
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* =========================
+   REPORTS
+========================= */
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.report-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.report-card small {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+
+.report-card strong {
+  font-size: 20px;
+  color: var(--green);
+}
+
+.report-profit {
+  font-size: 26px !important;
+}
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.report-row:last-child {
+  border-bottom: none;
+}
+
+.report-row span {
+  color: var(--muted);
+}
+
+.report-row strong {
+  color: var(--text);
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  background: rgba(255, 255, 255, 0.97);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  z-index: 1000;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+  background: transparent;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.nav-item span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.nav-item small {
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.nav-item.active {
+  color: var(--green);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 82px;
+  transform: translateX(-50%) translateY(20px);
+  background: #17221d;
+  color: white;
+  padding: 12px 17px;
+  border-radius: 12px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 2000;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 700px) {
+  .top-header {
+    border-radius: 0 0 35px 35px;
+    padding-left: max(30px, calc((100% - 900px) / 2 + 16px));
+    padding-right: max(30px, calc((100% - 900px) / 2 + 16px));
+  }
+
+  .quick-actions {
+    gap: 14px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .report-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .bottom-nav {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 720px;
+    border-radius: 18px 18px 0 0;
+  }
+}
