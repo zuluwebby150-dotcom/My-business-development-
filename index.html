@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Zenta Business</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <div class="app">
+
+    <!-- LOGIN PAGE -->
+    <section id="login" class="page active">
+      <div style="max-width:400px;margin:40px auto;padding:20px;">
+        <div style="text-align:center;margin-bottom:30px;">
+          <div class="logo" style="margin:0 auto 15px;width:60px;height:60px;font-size:28px;background:white;color:#087f52;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:0 5px 15px rgba(0,0,0,0.12);">Z</div>
+          <h2 style="font-size:24px;margin-bottom:6px;color:#17221d;">Zenta Business</h2>
+          <p style="color:#718078;font-size:14px;">Login with your phone number</p>
+        </div>
+
+        <div class="card form-card">
+          <div id="loginStep1">
+            <label for="loginPhone">Phone Number</label>
+            <input type="tel" id="loginPhone" placeholder="e.g. 097xxxxxxx" maxlength="12">
+            <button type="button" class="primary-button full" id="sendOtpBtn">Send OTP</button>
+          </div>
+
+          <div id="loginStep2" style="display:none;">
+            <label for="loginOtp">Enter OTP Code</label>
+            <input type="text" id="loginOtp" placeholder="6-digit code" maxlength="6">
+            <button type="button" class="primary-button full" id="verifyOtpBtn">Verify & Login</button>
+            <button type="button" class="text-button" id="backToPhone" style="margin-top:12px;width:100%;">← Change number</button>
+          </div>
+
+          <p id="loginError" style="color:#d94c4c;font-size:13px;margin-top:12px;display:none;"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HEADER (hidden until logged in) -->
+    <header class="top-header" id="mainHeader" style="display:none;">
+      <div class="brand-row">
+        <div class="brand">
+          <div class="logo">Z</div>
+          <div>
+            <strong>Zenta</strong>
+            <span>Business</span>
+          </div>
+        </div>
+        <button type="button" class="settings-btn" data-action="showPage" data-page="settings" aria-label="Settings">⚙️</button>
+      </div>
+
+      <div class="welcome">
+        <small id="greeting">Good day</small>
+        <h1 id="businessName">My Business</h1>
+      </div>
+
+      <div class="balance-card">
+        <div>
+          <small>Available balance</small>
+          <h2 id="balance">K 0.00</h2>
+        </div>
+        <div class="currency">🇿🇲 ZMW</div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="mainContent" style="display:none;">
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="page">
+        <div class="section-title">
+          <h2>Quick actions</h2>
+        </div>
+
+        <div class="quick-actions">
+          <button type="button" data-action="openForm" data-type="sale">
+            <span>💰</span>
+            <strong>Sale</strong>
+          </button>
+          <button type="button" data-action="openForm" data-type="expense">
+            <span>💸</span>
+            <strong>Expense</strong>
+          </button>
+          <button type="button" data-action="openForm" data-type="stock">
+            <span>📦</span>
+            <strong>Stock</strong>
+          </button>
+          <button type="button" data-action="openForm" data-type="customer">
+            <span>👤</span>
+            <strong>Customer</strong>
+          </button>
+        </div>
+
+        <div class="extra-actions">
+          <button type="button" data-action="showPage" data-page="reports">📊 Reports</button>
+          <button type="button" data-action="showPage" data-page="cashflow">💰 Cash Flow</button>
+        </div>
+
+        <div class="section-title">
+          <h2>Business overview</h2>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <small>Today's sales</small>
+            <strong id="todaySales">K 0.00</strong>
+            <span class="positive">Revenue</span>
+          </div>
+          <div class="stat-card">
+            <small>Expenses</small>
+            <strong id="todayExpenses">K 0.00</strong>
+            <span class="negative">Outflow</span>
+          </div>
+          <div class="stat-card">
+            <small>Nkongole</small>
+            <strong id="totalDebt">K 0.00</strong>
+            <span>Outstanding</span>
+          </div>
+          <div class="stat-card">
+            <small>Low stock</small>
+            <strong id="lowStock">0</strong>
+            <span>Items</span>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <h2>Recent activity</h2>
+          <button type="button" class="text-button" data-action="showPage" data-page="sales">See all</button>
+        </div>
+
+        <div class="card" id="recentActivity">
+          <div class="empty-state">
+            <div>📊</div>
+            <strong>No activity yet</strong>
+            <p>Your business activity will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SALES -->
+      <section id="sales" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Business records</small>
+            <h2>Sales</h2>
+          </div>
+          <button type="button" class="primary-button" data-action="openForm" data-type="sale">+ Sale</button>
+        </div>
+        <div class="card" id="salesList"></div>
+      </section>
+
+      <!-- EXPENSES -->
+      <section id="expenses" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Business records</small>
+            <h2>Expenses</h2>
+          </div>
+          <button type="button" class="primary-button" data-action="openForm" data-type="expense">+ Expense</button>
+        </div>
+        <div class="card" id="expensesList"></div>
+      </section>
+
+      <!-- STOCK -->
+      <section id="stock" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Inventory</small>
+            <h2>Stock</h2>
+          </div>
+          <button type="button" class="primary-button" data-action="openForm" data-type="stock">+ Item</button>
+        </div>
+        <div class="card" id="stockList"></div>
+      </section>
+
+      <!-- CUSTOMERS -->
+      <section id="customers" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Customers</small>
+            <h2>Customers & Nkongole</h2>
+          </div>
+          <button type="button" class="primary-button" data-action="openForm" data-type="customer">+ Customer</button>
+        </div>
+        <div class="card" id="customersList"></div>
+      </section>
+
+      <!-- INVOICES -->
+      <section id="invoices" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Business documents</small>
+            <h2>Invoices</h2>
+          </div>
+          <button type="button" class="primary-button" data-action="openForm" data-type="invoice">+ Invoice</button>
+        </div>
+        <div class="card" id="invoicesList"></div>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="reports" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Analytics</small>
+            <h2>Reports & Profit</h2>
+          </div>
+          <button type="button" class="text-button" data-action="showPage" data-page="dashboard">Back</button>
+        </div>
+        <div class="report-grid" id="reportSummary"></div>
+        <div class="card" id="reportDetails"></div>
+      </section>
+
+      <!-- CASH FLOW -->
+      <section id="cashflow" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Money movement</small>
+            <h2>Cash Flow</h2>
+          </div>
+          <button type="button" class="text-button" data-action="showPage" data-page="dashboard">Back</button>
+        </div>
+        <div class="report-grid" id="cashflowSummary"></div>
+        <div class="card" id="cashflowDetails"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="settings" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Zenta Business</small>
+            <h2>Business settings</h2>
+          </div>
+          <button type="button" class="text-button" data-action="showPage" data-page="dashboard">Back</button>
+        </div>
+        <div class="card form-card">
+          <label for="businessNameInput">Business name</label>
+          <input type="text" id="businessNameInput" placeholder="Enter business name">
+          <button type="button" class="primary-button full" data-action="saveSettings">Save changes</button>
+          <button type="button" class="primary-button full" id="logoutBtn" style="background:#d94c4c;margin-top:10px;">Log out</button>
+        </div>
+      </section>
+
+      <!-- FORM PAGE -->
+      <section id="formPage" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Zenta Business</small>
+            <h2 id="formTitle">Add record</h2>
+          </div>
+          <button type="button" class="text-button" data-action="showPage" data-page="dashboard">Cancel</button>
+        </div>
+        <div class="card">
+          <form id="recordForm">
+            <div id="formFields"></div>
+            <button type="submit" class="primary-button full">Save record</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- PAY DEBT -->
+      <section id="payDebtPage" class="page">
+        <div class="page-heading">
+          <div>
+            <small>Nkongole</small>
+            <h2>Record payment</h2>
+          </div>
+          <button type="button" class="text-button" data-action="showPage" data-page="customers">Cancel</button>
+        </div>
+        <div class="card">
+          <form id="payDebtForm">
+            <p id="payDebtCustomerName" style="margin-bottom:12px;font-weight:700;"></p>
+            <p id="payDebtCurrent" style="margin-bottom:16px;color:#718078;font-size:13px;"></p>
+            <label for="payDebtAmount">Amount paid</label>
+            <input id="payDebtAmount" type="number" step="0.01" min="0.01" required placeholder="0.00">
+            <label for="payDebtMethod">Payment method</label>
+            <select id="payDebtMethod">
+              <option>Cash</option>
+              <option>MTN MoMo</option>
+              <option>Airtel Money</option>
+              <option>Bank</option>
+            </select>
+            <button type="submit" class="primary-button full">Save payment</button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav" id="bottomNav" style="display:none;">
+      <button type="button" class="nav-item active" data-action="showPage" data-page="dashboard">
+        <span>⌂</span>
+        <small>Home</small>
+      </button>
+      <button type="button" class="nav-item" data-action="showPage" data-page="sales">
+        <span>💰</span>
+        <small>Sales</small>
+      </button>
+      <button type="button" class="nav-item" data-action="showPage" data-page="expenses">
+        <span>💸</span>
+        <small>Expenses</small>
+      </button>
+      <button type="button" class="nav-item" data-action="showPage" data-page="stock">
+        <span>📦</span>
+        <small>Stock</small>
+      </button>
+      <button type="button" class="nav-item" data-action="showPage" data-page="customers">
+        <span>👥</span>
+        <small>Customers</small>
+      </button>
+      <button type="button" class="nav-item" data-action="showPage" data-page="invoices">
+        <span>🧾</span>
+        <small>Invoices</small>
+      </button>
+    </nav>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">Saved successfully</div>
+
+    <!-- reCAPTCHA (required for phone auth) -->
+    <div id="recaptcha-container"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
